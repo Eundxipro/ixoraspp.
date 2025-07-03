@@ -3,120 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Regresi & Korelasi</title>
+    <title>Ixora Spp. - Produksi Tanaman Hortikultura</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Custom styles */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Light blue-gray background */
-            color: #334155; /* Dark slate gray text */
+            background-color: #f0fdf4; /* Light green background */
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
             min-height: 100vh;
-            margin: 0;
+            color: #333333; /* Default text color */
         }
-        .container {
-            max-width: 960px;
-            padding: 2rem;
-            text-align: center;
+        .header-bg {
+            background-color: #22c55e; /* Tailwind green-600 */
+            color: #ffffff;
         }
-        .card {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            transition: transform 0.3s ease-in-out;
+        .footer-bg {
+            background-color: #16a34a; /* Tailwind green-700 */
+            color: #ffffff;
         }
-        .card:hover {
-            transform: translateY(-8px);
+        .nav-link {
+            @apply px-4 py-2 rounded-md hover:bg-green-700 transition-colors duration-200;
         }
-        .section-title {
-            font-size: 2.5rem; /* 40px */
-            font-weight: 700; /* Bold */
-            color: #1e3a8a; /* Darker blue */
-            margin-bottom: 1.5rem;
-        }
-        .description {
-            font-size: 1.125rem; /* 18px */
-            color: #475569;
-            margin-bottom: 2rem;
-        }
-        .grid-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-        @media (min-width: 768px) {
-            .grid-container {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        .feature-card {
-            background-color: #e0f2fe; /* Lightest blue */
-            border-radius: 12px;
-            padding: 2rem;
+        .main-content-wrapper {
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        .poster-and-shortcuts {
+            display: flex;
+            flex-direction: column; /* Stack on small screens */
+            align-items: center;
+            gap: 2rem;
+            max-width: 900px; /* Max width for the combined section */
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        @media (min-width: 768px) {
+            .poster-and-shortcuts {
+                flex-direction: row; /* Side-by-side on larger screens */
+                align-items: flex-start; /* Align items to the top */
+                justify-content: center;
+            }
+        }
+        .poster-container {
+            max-width: 600px; /* Poster max width */
+            width: 100%;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 4px solid #16a34a; /* Green border around poster */
+        }
+        .poster-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .shortcut-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+            max-width: 250px; /* Max width for shortcut column */
+        }
+        .shortcut-button {
+            @apply flex items-center justify-center p-4 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition-all duration-300 transform hover:scale-105;
+            font-weight: bold;
             text-decoration: none;
-            color: #1e40af; /* Dark blue for text */
-            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            height: 100%; /* Ensure cards are same height */
-            justify-content: center; /* Center content vertically */
         }
-        .feature-card:hover {
-            background-color: #bfdbfe; /* Lighter blue on hover */
-            transform: translateY(-5px);
+        .shortcut-button i {
+            margin-right: 0.75rem;
+            font-size: 1.5rem;
         }
-        .feature-card h3 {
-            font-size: 1.75rem; /* 28px */
-            font-weight: 600; /* Semi-bold */
-            margin-bottom: 1rem;
+        .profile-box {
+            background-color: #4CAF50; /* Green background for the profile box */
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            justify-center: center; /* Center items horizontally */
+            align-items: center;
+            gap: 0.75rem 1.5rem; /* Vertical and horizontal gap */
+            color: #ffffff;
+            margin-top: 1rem;
         }
-        .feature-card p {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
+        .profile-item {
+            display: flex;
+            align-items: center;
+            white-space: nowrap; /* Prevent line breaks within an item */
         }
-        .feature-card .button {
-            background-color: #3b82f6; /* Blue */
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            display: inline-block;
-            transition: background-color 0.3s ease-in-out;
+        .profile-item i {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
         }
-        .feature-card .button:hover {
-            background-color: #2563eb; /* Darker blue on hover */
+        /* Responsive adjustments for navigation */
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+                width: 100%;
+                text-align: center;
+            }
+            .nav-link {
+                width: 100%;
+            }
+            .profile-box {
+                flex-direction: column; /* Stack profile items on very small screens */
+                align-items: flex-start;
+                padding: 1rem;
+            }
+            .profile-item {
+                width: 100%; /* Full width for stacked items */
+                justify-content: flex-start;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <h1 class="section-title">Selamat Datang di Portal Regresi & Korelasi</h1>
-            <p class="description">Pilih jenis analisis yang ingin Anda pelajari atau uji coba:</p>
 
-            <div class="grid-container">
-                <a href="quadratic-regression.html" class="feature-card">
-                    <h3>Regresi Kuadratik</h3>
-                    <p>Pelajari fungsi regresi polinomial orde 2 dan uji coba dengan data Anda sendiri.</p>
-                    <span class="button">Lihat Materi</span>
+    <!-- Header -->
+    <header class="header-bg p-4 shadow-lg">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="text-2xl font-bold mb-2 md:mb-0">
+                <a href="index.html" class="hover:text-gray-100 transition-colors">Flora Nusantara: Ixora Spp.</a>
+            </div>
+            <nav class="nav-links flex flex-wrap justify-center gap-4">
+                <a href="tentang-ixora.html" class="nav-link">Tentang Ixora</a>
+                <a href="budidaya.html" class="nav-link">Budidaya</a>
+                <a href="tips-perawatan.html" class="nav-link">Tips Perawatan</a>
+                <a href="keunggulan-lain.html" class="nav-link">Keunggulan Lain</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content-wrapper">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-green-800 mb-6">Selamat Datang di Dunia Ixora Spp.!</h1>
+        <p class="text-lg text-gray-700 mb-8 max-w-2xl">
+            Jelajahi keindahan dan manfaat Bunga Soka. Lihat ringkasan infografis atau klik tombol di samping untuk detail mendalam.
+        </p>
+
+        <div class="poster-and-shortcuts">
+            <div class="poster-container">
+                <img src="https://github.com/Eundxipro/ixoraspp./blob/main/ixoraspp.png?raw=true" alt="Final Poster Infografis Ixora Spp.">
+            </div>
+            <div class="shortcut-buttons">
+                <a href="tentang-ixora.html" class="shortcut-button">
+                    <i class="fas fa-info-circle"></i> Tentang Ixora
                 </a>
-
-                <a href="linear-regression.html" class="feature-card">
-                    <h3>Regresi & Korelasi Linier Sederhana</h3>
-                    <p>Pahami hubungan linier antar variabel dan analisis korelasinya.</p>
-                    <span class="button">Lihat Materi</span>
+                <a href="budidaya.html" class="shortcut-button">
+                    <i class="fas fa-seedling"></i> Budidaya
+                </a>
+                <a href="tips-perawatan.html" class="shortcut-button">
+                    <i class="fas fa-hand-holding-heart"></i> Tips Perawatan
+                </a>
+                <a href="keunggulan-lain.html" class="shortcut-button">
+                    <i class="fas fa-star"></i> Keunggulan Lain
                 </a>
             </div>
         </div>
-    </div>
+        <p class="text-sm text-gray-600 mt-4">
+            *Gambar poster di atas adalah ringkasan singkat. Gunakan tombol di samping atau menu navigasi untuk informasi mendalam!
+        </p>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-bg p-6 mt-auto shadow-inner">
+        <div class="container mx-auto text-center">
+            <p class="text-sm">Dibuat dengan ❤️ oleh Mahasiswa Hortikultura</p>
+            <div class="profile-box">
+                <span class="profile-item"><i class="fas fa-user"></i> Nama: I Ketut Yuda Prawira Mandala Putra</span>
+                <span class="profile-item"><i class="fas fa-id-card"></i> NIM: 2206541030</span>
+                <span class="profile-item"><i class="fas fa-book"></i> Mata Kuliah: Produksi Tanaman Hortikultura</span>
+            </div>
+            <p class="text-sm mt-2">&copy; 2025. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
 </body>
 </html>
-
