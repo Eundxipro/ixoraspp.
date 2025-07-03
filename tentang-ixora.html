@@ -39,7 +39,8 @@
             @apply px-4 py-2 rounded-md hover:bg-green-700 transition-colors duration-200;
         }
         .section-content {
-            @apply container mx-auto px-4 py-8 mb-8 bg-white rounded-lg shadow-lg;
+            /* Increased horizontal padding for better spacing */
+            @apply container mx-auto px-6 md:px-8 py-8 mb-8 bg-white rounded-lg shadow-lg;
             background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white background for content */
             margin: 2rem auto; /* Center the content block */
             max-width: 1000px; /* Adjust max width for content */
@@ -47,20 +48,38 @@
             box-sizing: border-box; /* Include padding in width calculation */
         }
         h2 {
-            @apply text-3xl font-bold text-green-800 mb-4 border-b-2 border-green-300 pb-2;
+            /* Increased font size and changed color for main heading */
+            /* text-4xl (2.25rem) + 3pt approx. text-5xl (3rem) */
+            @apply text-4xl md:text-5xl font-bold text-black mb-4 border-b-2 border-green-300 pb-2;
         }
         h3 {
-            @apply text-2xl font-semibold text-green-700 mb-3;
+            /* Increased font size and changed color for sub-headings */
+            /* text-2xl (1.5rem) + 3pt approx. text-3xl (1.875rem) */
+            @apply text-2xl md:text-3xl font-bold text-black mb-3; /* Changed to text-black and font-bold */
         }
         p {
-            @apply mb-4 leading-relaxed;
+            /* Reduced font size for general paragraphs */
+            @apply mb-4 leading-relaxed text-sm md:text-base;
         }
         ul {
-            @apply list-disc list-inside mb-4;
+            @apply mb-4; /* Keep default margin-bottom */
         }
         li {
-            @apply mb-2;
+            @apply mb-2 text-gray-700; /* Added margin-bottom and text color for list items */
         }
+        /* Specific styling for list-none to ensure proper indentation */
+        ul.list-none {
+            padding-left: 1.5rem; /* Increased padding for list-none */
+        }
+        /* Specific styling for list-disc to ensure proper indentation and bullet spacing */
+        ul.list-disc {
+            padding-left: 1.5rem; /* Increased padding for list-disc */
+            list-style-position: outside; /* Ensure bullet is outside the content */
+        }
+        ul.list-disc li {
+            padding-left: 0.5rem; /* Add some space between bullet and text */
+        }
+
 
         /* Image Gallery Styles */
         .image-gallery {
@@ -342,6 +361,9 @@
             <img src="https://github.com/Eundxipro/ixoraspp./blob/main/gambar%20foto%20pemilik.jpeg?raw=true" alt="Foto Profil Pemilik" class="sidebar-profile-img" onclick="event.stopPropagation(); showLightbox('https://github.com/Eundxipro/ixoraspp./blob/main/gambar%20foto%20pemilik.jpeg?raw=true')">
             <span class="sidebar-profile-name" onclick="showProfileModal()">I Ketut Yuda P. M. P.</span>
         </div>
+        <a href="index.html" class="sidebar-nav-link" onclick="toggleSidebar()">
+            <i class="fas fa-home"></i> Beranda
+        </a>
         <a href="tentang-ixora.html" class="sidebar-nav-link active" onclick="toggleSidebar()">
             <i class="fas fa-info-circle"></i> Tentang Ixora
         </a>
@@ -362,7 +384,8 @@
     <!-- Main Content - Tentang Ixora -->
     <main class="flex-grow py-8">
         <section class="section-content">
-            <h2 class="text-center">Mengenal Lebih Dekat Bunga Soka (Ixora Spp.)</h2>
+            <!-- Main Title -->
+            <h2 class="text-center text-4xl md:text-5xl font-bold text-black mb-4 border-b-2 border-green-300 pb-2">Mengenal Lebih Dekat Bunga Soka (Ixora Spp.)</h2>
             <p>
                 Ixora spp., yang secara umum dikenal sebagai Bunga Soka, merupakan genus tanaman hias tropis yang sangat dihargai dalam hortikultura dan botani. Sebagai anggota famili Rubiaceae, genus ini mencakup sekitar 500 spesies yang tersebar luas di daerah tropis dan subtropis Asia, Afrika, dan Pasifik. Popularitasnya tidak hanya didasarkan pada estetika visual, tetapi juga pada karakteristik botani dan ekologisnya yang menarik.
             </p>
@@ -379,49 +402,54 @@
                 </div>
             </div>
 
-            <h3 class="mt-8">Taksonomi dan Klasifikasi</h3>
+            <!-- Sub-heading: Taksonomi dan Klasifikasi -->
+            <h3 class="mt-8 text-2xl md:text-3xl font-bold text-black">Taksonomi dan Klasifikasi</h3>
             <p>
                 Secara taksonomi, Ixora spp. diklasifikasikan sebagai berikut:
             </p>
-            <ul class="list-none pl-4">
-                <li><strong>Kingdom:</strong> Plantae</li>
-                <li><strong>Divisi:</strong> Tracheophyta</li>
-                <li><strong>Kelas:</strong> Magnoliopsida (Dicotyledoneae)</li>
-                <li><strong>Ordo:</strong> Gentianales</li>
-                <li><strong>Famili:</strong> Rubiaceae (Famili kopi-kopian)</li>
-                <li><strong>Genus:</strong> Ixora L.</li>
+            <ul class="list-none pl-6 space-y-2">
+                <li><strong class="text-green-700 text-sm md:text-base">Kingdom:</strong> Plantae</li>
+                <li><strong class="text-green-700 text-sm md:text-base">Divisi:</strong> Tracheophyta</li>
+                <li><strong class="text-green-700 text-sm md:text-base">Kelas:</strong> Magnoliopsida (Dicotyledoneae)</li>
+                <li><strong class="text-green-700 text-sm md:text-base">Ordo:</strong> Gentianales</li>
+                <li><strong class="text-green-700 text-sm md:text-base">Famili:</strong> Rubiaceae (Famili kopi-kopian)</li>
+                <li><strong class="text-green-700 text-sm md:text-base">Genus:</strong> Ixora L.</li>
             </ul>
             <p>
                 Famili Rubiaceae dikenal sebagai salah satu famili tumbuhan berbunga terbesar, yang dicirikan oleh daun berlawanan atau melingkar, stipula interpetiolar, dan bunga biseksual yang seringkali tersusun dalam inflorescence simosa atau corymbosa.
             </p>
 
-            <h3>Morfologi dan Ciri Botanis</h3>
+            <!-- Sub-heading: Morfologi dan Ciri Botanis -->
+            <h3 class="text-2xl md:text-3xl font-bold text-black">Morfologi dan Ciri Botanis</h3>
             <p>
                 Spesies Ixora umumnya berupa semak atau pohon kecil. Ciri morfologi utamanya meliputi:
             </p>
-            <ul>
-                <li><strong>Daun:</strong> Tersusun berlawanan atau kadang melingkar (verticillate), berbentuk elips hingga lanset, dengan tepi daun utuh (entire) dan tekstur mengkilap. Stipula interpetiolar (stipula yang terletak di antara tangkai daun) adalah ciri khas famili Rubiaceae.</li>
-                <li><strong>Bunga:</strong> Tersusun dalam inflorescence terminal berbentuk corymb atau panikel yang padat. Setiap bunga individu berukuran kecil, tubular, dengan empat kelopak (corolla lobes) yang menyebar atau melengkung. Warna bunga sangat bervariasi tergantung spesies dan kultivar, mencakup merah, oranye, kuning, merah muda, dan putih. Bunga memiliki empat benang sari (stamens) yang melekat pada tabung mahkota dan satu putik (pistil) dengan ovarium inferior.</li>
-                <li><strong>Buah:</strong> Berupa drupe kecil yang berdaging, seringkali berwarna merah atau hitam saat matang, mengandung satu atau dua biji.</li>
+            <ul class="list-disc list-inside space-y-2 pl-6">
+                <li><strong class="text-green-700 text-sm md:text-base">Daun:</strong> Tersusun berlawanan atau kadang melingkar (verticillate), berbentuk elips hingga lanset, dengan tepi daun utuh (entire) dan tekstur mengkilap. Stipula interpetiolar (stipula yang terletak di antara tangkai daun) adalah ciri khas famili Rubiaceae.</li>
+                <li><strong class="text-green-700 text-sm md:text-base">Bunga:</strong> Tersusun dalam inflorescence terminal berbentuk corymb atau panikel yang padat. Setiap bunga individu berukuran kecil, tubular, dengan empat kelopak (corolla lobes) yang menyebar atau melengkung. Warna bunga sangat bervariasi tergantung spesies dan kultivar, mencakup merah, oranye, kuning, merah muda, dan putih. Bunga memiliki empat benang sari (stamens) yang melekat pada tabung mahkota dan satu putik (pistil) dengan ovarium inferior.</li>
+                <li><strong class="text-green-700 text-sm md:text-base">Buah:</strong> Berupa drupe kecil yang berdaging, seringkali berwarna merah atau hitam saat matang, mengandung satu atau dua biji.</li>
             </ul>
 
-            <h3>Ekologi dan Peran dalam Ekosistem</h3>
+            <!-- Sub-heading: Ekologi dan Peran dalam Ekosistem -->
+            <h3 class="text-2xl md:text-3xl font-bold text-black">Ekologi dan Peran dalam Ekosistem</h3>
             <p>
                 Ixora memiliki peran ekologis yang signifikan, terutama sebagai sumber nektar bagi berbagai polinator. Struktur bunga tubularnya sangat adaptif untuk menarik serangga dengan proboscis panjang seperti kupu-kupu (ordo Lepidoptera) dan ngengat, serta burung kolibri (famili Trochilidae) di daerah endemik mereka. Nektar yang melimpah menjadi daya tarik utama, memfasilitasi penyerbukan silang dan mendukung reproduksi tanaman. Kehadiran Ixora dalam suatu ekosistem dapat meningkatkan keanekaragaman hayati lokal dengan menyediakan sumber daya penting bagi fauna penyerbuk.
             </p>
 
-            <h3>Pemanfaatan dan Aspek Hortikultura</h3>
+            <!-- Sub-heading: Pemanfaatan dan Aspek Hortikultura -->
+            <h3 class="text-2xl md:text-3xl font-bold text-black">Pemanfaatan dan Aspek Hortikultura</h3>
             <p>
                 Di bidang hortikultura, Ixora sangat dihargai sebagai tanaman hias karena periode berbunga yang panjang dan warna bunga yang cerah. Ia digunakan secara luas dalam desain lanskap sebagai tanaman hedging, spesimen tunggal, atau dalam wadah. Preferensi terhadap sinar matahari penuh hingga parsial dan tanah berdrainase baik menjadikannya pilihan yang adaptif untuk berbagai kondisi lingkungan tropis. Pemangkasan rutin diperlukan untuk mempertahankan bentuk dan mendorong pembentukan bunga baru.
             </p>
 
-            <h3>Potensi Farmakologi dan Etnobotani</h3>
+            <!-- Sub-heading: Potensi Farmakologi dan Etnobotani -->
+            <h3 class="text-2xl md:text-3xl font-bold text-black">Potensi Farmakologi dan Etnobotani</h3>
             <p>
                 Beberapa spesies Ixora juga memiliki sejarah penggunaan dalam pengobatan tradisional di berbagai budaya. Bagian tanaman seperti daun, bunga, dan akar telah digunakan untuk mengobati berbagai kondisi, termasuk demam, diare, dan masalah kulit. Penelitian fitokimia modern telah mengidentifikasi berbagai senyawa bioaktif, termasuk flavonoid, glikosida, dan tanin, yang mungkin berkontribusi pada sifat farmakologisnya. Namun, penelitian lebih lanjut diperlukan untuk memvalidasi efektivitas dan keamanannya secara ilmiah.
             </p>
 
-            <h3 class="mt-8">Daftar Pustaka</h3>
-            <ul class="list-none pl-4 text-sm">
+            <h3 class="mt-8 text-2xl md:text-3xl font-bold text-black">Daftar Pustaka</h3>
+            <ul class="list-none pl-6 space-y-2">
                 <li>Baliga, M. S., & Kurian, P. (2012). Ixora coccinea Linn.: Traditional uses, phytochemistry and pharmacology. Chinese Journal of Integrative Medicine, 18(1), 72–79.</li>
                 <li>De Block, P. (1998). The genus Ixora (Rubiaceae: Ixoreae) in Africa and Madagascar. Opera Botanica Belgica, 11.</li>
                 <li>Mouly, A., Razafimandimbison, S. G., & Bremer, B. (2009). Phylogeny and character evolution in Ixora and allied genera (Ixoreae: Rubiaceae) based on nuclear and plastid DNA sequences. Annals of the Missouri Botanical Garden, 96(1), 146–172.</li>
