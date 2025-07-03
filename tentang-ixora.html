@@ -3,120 +3,525 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Regresi & Korelasi</title>
+    <title>Tentang Ixora Spp. - Produksi Tanaman Hortikultura</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Custom styles */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Light blue-gray background */
-            color: #334155; /* Dark slate gray text */
+            background-color: #f0fdf4; /* Fallback light green background */
+            background-image: url('https://github.com/Eundxipro/ixoraspp./blob/main/background.png?raw=true');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Fixed background */
             display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            color: #333333; /* Default text color */
+        }
+        .header-bg {
+            background-color: #22c55e; /* Tailwind green-600 */
+            color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%; /* Ensure header takes full width */
+        }
+        .footer-bg {
+            background-color: #16a34a; /* Tailwind green-700 */
+            color: #ffffff;
+            width: 100%; /* Ensure footer takes full width */
+        }
+        .nav-link {
+            @apply px-4 py-2 rounded-md hover:bg-green-700 transition-colors duration-200;
+        }
+        .section-content {
+            @apply container mx-auto px-4 py-8 mb-8 bg-white rounded-lg shadow-lg;
+            background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white background for content */
+            margin: 2rem auto; /* Center the content block */
+            max-width: 1000px; /* Adjust max width for content */
+            width: 95%; /* Responsive width */
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+        h2 {
+            @apply text-3xl font-bold text-green-800 mb-4 border-b-2 border-green-300 pb-2;
+        }
+        h3 {
+            @apply text-2xl font-semibold text-green-700 mb-3;
+        }
+        p {
+            @apply mb-4 leading-relaxed;
+        }
+        ul {
+            @apply list-disc list-inside mb-4;
+        }
+        li {
+            @apply mb-2;
+        }
+
+        /* Image Gallery Styles */
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .container {
-            max-width: 960px;
-            padding: 2rem;
-            text-align: center;
-        }
-        .card {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            transition: transform 0.3s ease-in-out;
-        }
-        .card:hover {
-            transform: translateY(-8px);
-        }
-        .section-title {
-            font-size: 2.5rem; /* 40px */
-            font-weight: 700; /* Bold */
-            color: #1e3a8a; /* Darker blue */
-            margin-bottom: 1.5rem;
-        }
-        .description {
-            font-size: 1.125rem; /* 18px */
-            color: #475569;
+            gap: 1rem;
+            margin-top: 1.5rem;
             margin-bottom: 2rem;
         }
-        .grid-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
+        .image-item {
+            flex: 1 1 calc(33% - 1rem); /* 3 items per row on desktop, adjust for gap */
+            max-width: calc(33% - 1rem);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 2px solid #a8e6cf; /* Light green border for images */
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
         }
-        @media (min-width: 768px) {
-            .grid-container {
-                grid-template-columns: 1fr 1fr;
+        .image-item:hover {
+            transform: translateY(-5px);
+        }
+        .image-item img {
+            width: 100%;
+            height: 180px; /* Fixed height for consistency */
+            object-fit: cover;
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .image-item {
+                flex: 1 1 calc(50% - 0.5rem); /* 2 items per row on tablet */
+                max-width: calc(50% - 0.5rem);
             }
         }
-        .feature-card {
-            background-color: #e0f2fe; /* Lightest blue */
-            border-radius: 12px;
-            padding: 2rem;
+        @media (max-width: 480px) {
+            .image-item {
+                flex: 1 1 100%; /* 1 item per row on small mobile */
+                max-width: 100%;
+            }
+        }
+
+        /* Hamburger Menu Styles */
+        .hamburger-menu {
+            display: none; /* Hidden by default on desktop */
+            cursor: pointer;
+            font-size: 1.8rem;
+            color: white;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px; /* Hidden off-screen */
+            width: 250px;
+            height: 100%;
+            background-color: #16a34a; /* Darker green for sidebar */
+            color: white;
+            padding-top: 5rem; /* Space for fixed header */
+            transition: left 0.3s ease;
+            z-index: 1000; /* Above everything */
+            box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+            overflow-y: auto; /* Enable scrolling for sidebar content if needed */
+        }
+        .sidebar.open {
+            left: 0; /* Slide in */
+        }
+        .sidebar-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: background-color 0.2s ease;
+        }
+        .sidebar-nav-link:hover {
+            background-color: #22c55e; /* Lighter green on hover */
+        }
+        .sidebar-nav-link.active { /* Active state for current page */
+            background-color: #22c55e;
+            font-weight: bold;
+        }
+        .sidebar-nav-link i {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+        .sidebar-profile {
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-decoration: none;
-            color: #1e40af; /* Dark blue for text */
-            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            height: 100%; /* Ensure cards are same height */
-            justify-content: center; /* Center content vertically */
-        }
-        .feature-card:hover {
-            background-color: #bfdbfe; /* Lighter blue on hover */
-            transform: translateY(-5px);
-        }
-        .feature-card h3 {
-            font-size: 1.75rem; /* 28px */
-            font-weight: 600; /* Semi-bold */
+            padding: 1.5rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             margin-bottom: 1rem;
         }
-        .feature-card p {
+        .sidebar-profile-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            margin-bottom: 0.75rem;
+            cursor: pointer; /* Make image clickable */
+        }
+        .sidebar-profile-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer; /* Make name clickable */
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        .overlay.active {
+            display: block;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1001; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            width: 90%; /* Wider for mobile */
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            text-align: center;
+            color: #333;
+        }
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal-profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #22c55e;
+            margin: 0 auto 1rem;
+        }
+        .modal-profile-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #16a34a;
+            margin-bottom: 0.5rem;
+        }
+        .modal-profile-detail {
             font-size: 1rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
+            margin-bottom: 0.25rem;
         }
-        .feature-card .button {
-            background-color: #3b82f6; /* Blue */
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            display: inline-block;
-            transition: background-color 0.3s ease-in-out;
+
+        /* Lightbox for Image */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1002; /* Higher than modal */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
         }
-        .feature-card .button:hover {
-            background-color: #2563eb; /* Darker blue on hover */
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .lightbox-close:hover,
+        .lightbox-close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Responsive adjustments for header profile image on mobile */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Hide regular nav links on mobile */
+            }
+            .hamburger-menu {
+                display: block; /* Show hamburger on mobile */
+            }
+            .header-content {
+                justify-content: space-between; /* Space out hamburger and title */
+            }
+            .profile-box {
+                flex-direction: column; /* Stack profile items on very small screens */
+                align-items: flex-start;
+                padding: 1rem;
+            }
+            .profile-item {
+                width: 100%; /* Full width for stacked items */
+                justify-content: flex-start;
+            }
+            /* Adjust header profile image for mobile */
+            .header-content .flex.items-center { /* Target the profile div */
+                margin-left: auto; /* Push to the right */
+            }
+            .header-content .flex.items-center img {
+                width: 35px; /* Smaller size for mobile header profile */
+                height: 35px;
+            }
+            .header-content .flex.items-center span {
+                font-size: 0.9rem; /* Smaller font for mobile header profile name */
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <h1 class="section-title">Selamat Datang di Portal Regresi & Korelasi</h1>
-            <p class="description">Pilih jenis analisis yang ingin Anda pelajari atau uji coba:</p>
 
-            <div class="grid-container">
-                <a href="quadratic-regression.html" class="feature-card">
-                    <h3>Regresi Kuadratik</h3>
-                    <p>Pelajari fungsi regresi polinomial orde 2 dan uji coba dengan data Anda sendiri.</p>
-                    <span class="button">Lihat Materi</span>
-                </a>
+    <!-- Header -->
+    <header class="header-bg p-4 shadow-lg">
+        <div class="container mx-auto flex items-center justify-between header-content">
+            <!-- Hamburger Menu Icon -->
+            <div class="hamburger-menu" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </div>
 
-                <a href="linear-regression.html" class="feature-card">
-                    <h3>Regresi & Korelasi Linier Sederhana</h3>
-                    <p>Pahami hubungan linier antar variabel dan analisis korelasinya.</p>
-                    <span class="button">Lihat Materi</span>
-                </a>
+            <div class="text-2xl font-bold">
+                <a href="index.html" class="hover:text-gray-100 transition-colors">Flora Nusantara: Ixora Spp.</a>
+            </div>
+            
+            <!-- Profile Image and Name in Header (Clickable) -->
+            <div class="flex items-center cursor-pointer" onclick="showProfileModal()">
+                <img src="https://github.com/Eundxipro/ixoraspp./blob/main/gambar%20foto%20pemilik.jpeg?raw=true" alt="Foto Profil Pemilik" class="w-10 h-10 rounded-full border-2 border-white mr-2" onclick="event.stopPropagation(); showLightbox('https://github.com/Eundxipro/ixoraspp./blob/main/gambar%20foto%20pemilik.jpeg?raw=true')">
+                <span class="text-lg font-semibold">Yuda P.</span>
             </div>
         </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-profile">
+            <img src="https://github.com/Eundxipro/ixoraspp./blob/main/gambar%20foto%20pemilik.jpeg?raw=true" alt="Foto Profil Pemilik" class="sidebar-profile-img" onclick="event.stopPropagation(); showLightbox('https://github.com/Eundxipro/ixoraspp./blob/main/gambar%20foto%20pemilik.jpeg?raw=true')">
+            <span class="sidebar-profile-name" onclick="showProfileModal()">I Ketut Yuda P. M. P.</span>
+        </div>
+        <a href="tentang-ixora.html" class="sidebar-nav-link active" onclick="toggleSidebar()">
+            <i class="fas fa-info-circle"></i> Tentang Ixora
+        </a>
+        <a href="budidaya.html" class="sidebar-nav-link" onclick="toggleSidebar()">
+            <i class="fas fa-seedling"></i> Budidaya
+        </a>
+        <a href="tips-perawatan.html" class="sidebar-nav-link" onclick="toggleSidebar()">
+            <i class="fas fa-hand-holding-heart"></i> Tips Perawatan
+        </a>
+        <a href="keunggulan-lain.html" class="sidebar-nav-link" onclick="toggleSidebar()">
+            <i class="fas fa-star"></i> Keunggulan Lain
+        </a>
     </div>
+
+    <!-- Overlay for Sidebar -->
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Main Content - Tentang Ixora -->
+    <main class="flex-grow py-8">
+        <section class="section-content">
+            <h2 class="text-center">Mengenal Lebih Dekat Bunga Soka (Ixora Spp.)</h2>
+            <p>
+                Ixora spp., yang secara umum dikenal sebagai Bunga Soka, merupakan genus tanaman hias tropis yang sangat dihargai dalam hortikultura dan botani. Sebagai anggota famili Rubiaceae, genus ini mencakup sekitar 500 spesies yang tersebar luas di daerah tropis dan subtropis Asia, Afrika, dan Pasifik. Popularitasnya tidak hanya didasarkan pada estetika visual, tetapi juga pada karakteristik botani dan ekologisnya yang menarik.
+            </p>
+
+            <div class="image-gallery">
+                <div class="image-item" onclick="showLightbox('https://github.com/Eundxipro/ixoraspp./blob/main/soka%20merah.png?raw=true')">
+                    <img src="https://github.com/Eundxipro/ixoraspp./blob/main/soka%20merah.png?raw=true" alt="Bunga Soka Merah">
+                </div>
+                <div class="image-item" onclick="showLightbox('https://github.com/Eundxipro/ixoraspp./blob/main/soka%20kuning.png?raw=true')">
+                    <img src="https://github.com/Eundxipro/ixoraspp./blob/main/soka%20kuning.png?raw=true" alt="Bunga Soka Kuning">
+                </div>
+                <div class="image-item" onclick="showLightbox('https://github.com/Eundxipro/ixoraspp./blob/main/soka%20putih.png?raw=true')">
+                    <img src="https://github.com/Eundxipro/ixoraspp./blob/main/soka%20putih.png?raw=true" alt="Bunga Soka Putih">
+                </div>
+            </div>
+
+            <h3 class="mt-8">Taksonomi dan Klasifikasi</h3>
+            <p>
+                Secara taksonomi, Ixora spp. diklasifikasikan sebagai berikut:
+            </p>
+            <ul class="list-none pl-4">
+                <li><strong>Kingdom:</strong> Plantae</li>
+                <li><strong>Divisi:</strong> Tracheophyta</li>
+                <li><strong>Kelas:</strong> Magnoliopsida (Dicotyledoneae)</li>
+                <li><strong>Ordo:</strong> Gentianales</li>
+                <li><strong>Famili:</strong> Rubiaceae (Famili kopi-kopian)</li>
+                <li><strong>Genus:</strong> Ixora L.</li>
+            </ul>
+            <p>
+                Famili Rubiaceae dikenal sebagai salah satu famili tumbuhan berbunga terbesar, yang dicirikan oleh daun berlawanan atau melingkar, stipula interpetiolar, dan bunga biseksual yang seringkali tersusun dalam inflorescence simosa atau corymbosa.
+            </p>
+
+            <h3>Morfologi dan Ciri Botanis</h3>
+            <p>
+                Spesies Ixora umumnya berupa semak atau pohon kecil. Ciri morfologi utamanya meliputi:
+            </p>
+            <ul>
+                <li><strong>Daun:</strong> Tersusun berlawanan atau kadang melingkar (verticillate), berbentuk elips hingga lanset, dengan tepi daun utuh (entire) dan tekstur mengkilap. Stipula interpetiolar (stipula yang terletak di antara tangkai daun) adalah ciri khas famili Rubiaceae.</li>
+                <li><strong>Bunga:</strong> Tersusun dalam inflorescence terminal berbentuk corymb atau panikel yang padat. Setiap bunga individu berukuran kecil, tubular, dengan empat kelopak (corolla lobes) yang menyebar atau melengkung. Warna bunga sangat bervariasi tergantung spesies dan kultivar, mencakup merah, oranye, kuning, merah muda, dan putih. Bunga memiliki empat benang sari (stamens) yang melekat pada tabung mahkota dan satu putik (pistil) dengan ovarium inferior.</li>
+                <li><strong>Buah:</strong> Berupa drupe kecil yang berdaging, seringkali berwarna merah atau hitam saat matang, mengandung satu atau dua biji.</li>
+            </ul>
+
+            <h3>Ekologi dan Peran dalam Ekosistem</h3>
+            <p>
+                Ixora memiliki peran ekologis yang signifikan, terutama sebagai sumber nektar bagi berbagai polinator. Struktur bunga tubularnya sangat adaptif untuk menarik serangga dengan proboscis panjang seperti kupu-kupu (ordo Lepidoptera) dan ngengat, serta burung kolibri (famili Trochilidae) di daerah endemik mereka. Nektar yang melimpah menjadi daya tarik utama, memfasilitasi penyerbukan silang dan mendukung reproduksi tanaman. Kehadiran Ixora dalam suatu ekosistem dapat meningkatkan keanekaragaman hayati lokal dengan menyediakan sumber daya penting bagi fauna penyerbuk.
+            </p>
+
+            <h3>Pemanfaatan dan Aspek Hortikultura</h3>
+            <p>
+                Di bidang hortikultura, Ixora sangat dihargai sebagai tanaman hias karena periode berbunga yang panjang dan warna bunga yang cerah. Ia digunakan secara luas dalam desain lanskap sebagai tanaman hedging, spesimen tunggal, atau dalam wadah. Preferensi terhadap sinar matahari penuh hingga parsial dan tanah berdrainase baik menjadikannya pilihan yang adaptif untuk berbagai kondisi lingkungan tropis. Pemangkasan rutin diperlukan untuk mempertahankan bentuk dan mendorong pembentukan bunga baru.
+            </p>
+
+            <h3>Potensi Farmakologi dan Etnobotani</h3>
+            <p>
+                Beberapa spesies Ixora juga memiliki sejarah penggunaan dalam pengobatan tradisional di berbagai budaya. Bagian tanaman seperti daun, bunga, dan akar telah digunakan untuk mengobati berbagai kondisi, termasuk demam, diare, dan masalah kulit. Penelitian fitokimia modern telah mengidentifikasi berbagai senyawa bioaktif, termasuk flavonoid, glikosida, dan tanin, yang mungkin berkontribusi pada sifat farmakologisnya. Namun, penelitian lebih lanjut diperlukan untuk memvalidasi efektivitas dan keamanannya secara ilmiah.
+            </p>
+
+            <h3 class="mt-8">Daftar Pustaka</h3>
+            <ul class="list-none pl-4 text-sm">
+                <li>Baliga, M. S., & Kurian, P. (2012). Ixora coccinea Linn.: Traditional uses, phytochemistry and pharmacology. Chinese Journal of Integrative Medicine, 18(1), 72–79.</li>
+                <li>De Block, P. (1998). The genus Ixora (Rubiaceae: Ixoreae) in Africa and Madagascar. Opera Botanica Belgica, 11.</li>
+                <li>Mouly, A., Razafimandimbison, S. G., & Bremer, B. (2009). Phylogeny and character evolution in Ixora and allied genera (Ixoreae: Rubiaceae) based on nuclear and plastid DNA sequences. Annals of the Missouri Botanical Garden, 96(1), 146–172.</li>
+                <li>Nair, S. G., Jadhav, V. R., & Bakare, S. S. (2018). Ixora coccinea: Study of Phytochemical Parameters and Antioxidant Activity. International Journal of Innovative Research in Science, Engineering and Technology, 7(9), 9051–9064.</li>
+                <li>Taylor, W. C. (2009). Rubiaceae. In: Flora of North America Editorial Committee (Eds.), Flora of North America North of Mexico, Vol. 17: Magnoliophyta: Tetrachondraceae to Rubiaceae. Oxford University Press. (Untuk informasi umum famili Rubiaceae)</li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-bg p-6 mt-auto shadow-inner">
+        <div class="container mx-auto text-center">
+            <p class="text-sm">Dibuat dengan ❤️ oleh Mahasiswa Hortikultura</p>
+            <div class="profile-box">
+                <span class="profile-item"><i class="fas fa-user"></i> Nama: I Ketut Yuda Prawira Mandala Putra</span>
+                <span class="profile-item"><i class="fas fa-id-card"></i> NIM: 2206541030</span>
+                <span class="profile-item"><i class="fas fa-book"></i> Mata Kuliah: Produksi Tanaman Hortikultura</span>
+            </div>
+            <p class="text-sm mt-2">&copy; 2025. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="hideProfileModal()">&times;</span>
+            <img src="https://github.com/Eundxipro/ixoraspp./blob/main/gambar%20foto%20pemilik.jpeg?raw=true" alt="Foto Profil Pemilik" class="modal-profile-img">
+            <p class="modal-profile-name">I Ketut Yuda Prawira Mandala Putra</p>
+            <p class="modal-profile-detail">NIM: 2206541030</p>
+            <p class="modal-profile-detail">Mata Kuliah: Produksi Tanaman Hortikultura</p>
+        </div>
+    </div>
+
+    <!-- Lightbox for Image Viewer -->
+    <div id="imageLightbox" class="lightbox" onclick="hideLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightboxImage" src="">
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        function showProfileModal() {
+            document.getElementById('profileModal').style.display = 'flex';
+            // Ensure sidebar is closed when modal opens
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        function hideProfileModal() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+
+        function showLightbox(src) {
+            const lightbox = document.getElementById('imageLightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            lightboxImage.src = src;
+            lightbox.style.display = 'flex';
+            // Ensure sidebar is closed when lightbox opens
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        function hideLightbox() {
+            document.getElementById('imageLightbox').style.display = 'none';
+        }
+
+        // Close sidebar, modal, and lightbox if window resized to desktop
+        window.addEventListener('resize', () => {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const profileModal = document.getElementById('profileModal');
+            const imageLightbox = document.getElementById('imageLightbox');
+
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                profileModal.style.display = 'none'; // Hide modal on resize to desktop
+                imageLightbox.style.display = 'none'; // Hide lightbox on resize to desktop
+            }
+        });
+
+        // Close modal/lightbox if clicking outside content
+        window.addEventListener('click', (event) => {
+            const profileModal = document.getElementById('profileModal');
+            const imageLightbox = document.getElementById('imageLightbox');
+
+            if (event.target == profileModal) {
+                hideProfileModal();
+            }
+            if (event.target == imageLightbox) {
+                hideLightbox();
+            }
+        });
+    </script>
+
 </body>
 </html>
-
