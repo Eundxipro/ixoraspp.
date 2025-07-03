@@ -12,7 +12,11 @@
         /* Custom styles */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0fdf4; /* Light green background */
+            background-color: #f0fdf4; /* Fallback light green background */
+            background-image: url('https://github.com/Eundxipro/ixoraspp./blob/main/background.png?raw=true');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Fixed background */
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -21,6 +25,9 @@
         .header-bg {
             background-color: #22c55e; /* Tailwind green-600 */
             color: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         .footer-bg {
             background-color: #16a34a; /* Tailwind green-700 */
@@ -37,6 +44,12 @@
             justify-content: center;
             padding: 2rem;
             text-align: center;
+            background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white background for content */
+            margin: 2rem auto; /* Center the content block */
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 1000px; /* Adjust max width for content */
+            width: 90%; /* Responsive width */
         }
         .poster-and-shortcuts {
             display: flex;
@@ -90,7 +103,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-wrap: wrap; /* Allow wrapping on smaller screens */
-            justify-center: center; /* Center items horizontally */
+            justify-content: center; /* Center items horizontally */
             align-items: center;
             gap: 0.75rem 1.5rem; /* Vertical and horizontal gap */
             color: #ffffff;
@@ -105,16 +118,189 @@
             margin-right: 0.5rem;
             font-size: 1.1rem;
         }
-        /* Responsive adjustments for navigation */
+
+        /* Hamburger Menu Styles */
+        .hamburger-menu {
+            display: none; /* Hidden by default on desktop */
+            cursor: pointer;
+            font-size: 1.8rem;
+            color: white;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px; /* Hidden off-screen */
+            width: 250px;
+            height: 100%;
+            background-color: #16a34a; /* Darker green for sidebar */
+            color: white;
+            padding-top: 5rem; /* Space for fixed header */
+            transition: left 0.3s ease;
+            z-index: 1000; /* Above everything */
+            box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+        }
+        .sidebar.open {
+            left: 0; /* Slide in */
+        }
+        .sidebar-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: background-color 0.2s ease;
+        }
+        .sidebar-nav-link:hover {
+            background-color: #22c55e; /* Lighter green on hover */
+        }
+        .sidebar-nav-link i {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+        .sidebar-profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 1rem;
+        }
+        .sidebar-profile-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            margin-bottom: 0.75rem;
+            cursor: pointer; /* Make image clickable */
+        }
+        .sidebar-profile-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer; /* Make name clickable */
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        .overlay.active {
+            display: block;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1001; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            text-align: center;
+            color: #333;
+        }
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal-profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #22c55e;
+            margin: 0 auto 1rem;
+        }
+        .modal-profile-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #16a34a;
+            margin-bottom: 0.5rem;
+        }
+        .modal-profile-detail {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Lightbox for Image */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1002; /* Higher than modal */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+        }
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .lightbox-close:hover,
+        .lightbox-close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Responsive adjustments */
         @media (max-width: 768px) {
             .nav-links {
-                flex-direction: column;
-                gap: 0.5rem;
-                width: 100%;
-                text-align: center;
+                display: none; /* Hide regular nav links on mobile */
             }
-            .nav-link {
-                width: 100%;
+            .hamburger-menu {
+                display: block; /* Show hamburger on mobile */
+            }
+            .header-content {
+                justify-content: space-between; /* Space out hamburger and title */
             }
             .profile-box {
                 flex-direction: column; /* Stack profile items on very small screens */
@@ -125,6 +311,21 @@
                 width: 100%; /* Full width for stacked items */
                 justify-content: flex-start;
             }
+            /* Adjust header profile image for mobile if it was previously hidden */
+            .header-content .md:hidden.w-10 {
+                display: none; /* Hide the balancing div on mobile if profile image is shown */
+            }
+            .header-content .md\:flex.items-center {
+                display: flex; /* Ensure profile image is visible on mobile if desired */
+                margin-left: auto; /* Push to the right */
+            }
+            .header-content .md\:flex.items-center img {
+                width: 35px; /* Smaller size for mobile header profile */
+                height: 35px;
+            }
+            .header-content .md\:flex.items-center span {
+                font-size: 0.9rem; /* Smaller font for mobile header profile name */
+            }
         }
     </style>
 </head>
@@ -132,24 +333,52 @@
 
     <!-- Header -->
     <header class="header-bg p-4 shadow-lg">
-        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
-            <div class="text-2xl font-bold mb-2 md:mb-0">
+        <div class="container mx-auto flex items-center justify-between header-content">
+            <!-- Hamburger Menu Icon -->
+            <div class="hamburger-menu" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <div class="text-2xl font-bold">
                 <a href="index.html" class="hover:text-gray-100 transition-colors">Flora Nusantara: Ixora Spp.</a>
             </div>
-            <nav class="nav-links flex flex-wrap justify-center gap-4">
-                <a href="tentang-ixora.html" class="nav-link">Tentang Ixora</a>
-                <a href="budidaya.html" class="nav-link">Budidaya</a>
-                <a href="tips-perawatan.html" class="nav-link">Tips Perawatan</a>
-                <a href="keunggulan-lain.html" class="nav-link">Keunggulan Lain</a>
-            </nav>
+            
+            <!-- Profile Image and Name in Header (Clickable) -->
+            <div class="flex items-center cursor-pointer" onclick="showProfileModal()">
+                <img src="https://github.com/Eundxipro/ixoraspp./blob/main/gambar%20foto%20pemilik.jpeg?raw=true" alt="Foto Profil Pemilik" class="w-10 h-10 rounded-full border-2 border-white mr-2" onclick="event.stopPropagation(); showLightbox('https://github.com/Eundxipro/ixoraspp./blob/main/gambar%20foto%20pemilik.jpeg?raw=true')">
+                <span class="text-lg font-semibold">Yuda P.</span>
+            </div>
         </div>
     </header>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-profile">
+            <img src="https://github.com/Eundxipro/ixoraspp./blob/main/gambar%20foto%20pemilik.jpeg?raw=true" alt="Foto Profil Pemilik" class="sidebar-profile-img" onclick="event.stopPropagation(); showLightbox('https://github.com/Eundxipro/ixoraspp./blob/main/gambar%20foto%20pemilik.jpeg?raw=true')">
+            <span class="sidebar-profile-name" onclick="showProfileModal()">I Ketut Yuda P. M. P.</span>
+        </div>
+        <a href="tentang-ixora.html" class="sidebar-nav-link" onclick="toggleSidebar()">
+            <i class="fas fa-info-circle"></i> Tentang Ixora
+        </a>
+        <a href="budidaya.html" class="sidebar-nav-link" onclick="toggleSidebar()">
+            <i class="fas fa-seedling"></i> Budidaya
+        </a>
+        <a href="tips-perawatan.html" class="sidebar-nav-link" onclick="toggleSidebar()">
+            <i class="fas fa-hand-holding-heart"></i> Tips Perawatan
+        </a>
+        <a href="keunggulan-lain.html" class="sidebar-nav-link" onclick="toggleSidebar()">
+            <i class="fas fa-star"></i> Keunggulan Lain
+        </a>
+    </div>
+
+    <!-- Overlay for Sidebar -->
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
     <!-- Main Content -->
     <main class="main-content-wrapper">
         <h1 class="text-4xl md:text-5xl font-extrabold text-green-800 mb-6">Selamat Datang di Dunia Ixora Spp.!</h1>
         <p class="text-lg text-gray-700 mb-8 max-w-2xl">
-            Jelajahi keindahan dan manfaat Bunga Soka. Lihat ringkasan infografis atau klik tombol di samping untuk detail mendalam.
+            Jelajahi keindahan dan manfaat Bunga Soka. Klik tombol di samping untuk detail mendalam.
         </p>
 
         <div class="poster-and-shortcuts">
@@ -171,9 +400,6 @@
                 </a>
             </div>
         </div>
-        <p class="text-sm text-gray-600 mt-4">
-            *Gambar poster di atas adalah ringkasan singkat. Gunakan tombol di samping atau menu navigasi untuk informasi mendalam!
-        </p>
     </main>
 
     <!-- Footer -->
@@ -188,6 +414,79 @@
             <p class="text-sm mt-2">&copy; 2025. Hak Cipta Dilindungi.</p>
         </div>
     </footer>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="hideProfileModal()">&times;</span>
+            <img src="https://github.com/Eundxipro/ixoraspp./blob/main/gambar%20foto%20pemilik.jpeg?raw=true" alt="Foto Profil Pemilik" class="modal-profile-img">
+            <p class="modal-profile-name">I Ketut Yuda Prawira Mandala Putra</p>
+            <p class="modal-profile-detail">NIM: 2206541030</p>
+            <p class="modal-profile-detail">Mata Kuliah: Produksi Tanaman Hortikultura</p>
+        </div>
+    </div>
+
+    <!-- Lightbox for Image Viewer -->
+    <div id="imageLightbox" class="lightbox" onclick="hideLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightboxImage" src="">
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        function showProfileModal() {
+            document.getElementById('profileModal').style.display = 'flex';
+        }
+
+        function hideProfileModal() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+
+        function showLightbox(src) {
+            const lightbox = document.getElementById('imageLightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            lightboxImage.src = src;
+            lightbox.style.display = 'flex';
+        }
+
+        function hideLightbox() {
+            document.getElementById('imageLightbox').style.display = 'none';
+        }
+
+        // Close sidebar, modal, and lightbox if window resized to desktop
+        window.addEventListener('resize', () => {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const profileModal = document.getElementById('profileModal');
+            const imageLightbox = document.getElementById('imageLightbox');
+
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                profileModal.style.display = 'none'; // Hide modal on resize to desktop
+                imageLightbox.style.display = 'none'; // Hide lightbox on resize to desktop
+            }
+        });
+
+        // Close modal/lightbox if clicking outside content
+        window.addEventListener('click', (event) => {
+            const profileModal = document.getElementById('profileModal');
+            const imageLightbox = document.getElementById('imageLightbox');
+
+            if (event.target == profileModal) {
+                hideProfileModal();
+            }
+            if (event.target == imageLightbox) {
+                hideLightbox();
+            }
+        });
+    </script>
 
 </body>
 </html>
